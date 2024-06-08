@@ -1,0 +1,63 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ZodiacSign {
+  createdAt DateTime               @default(now())
+  dateRange String?
+  element   EnumZodiacSignElement?
+  id        String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  quality   EnumZodiacSignQuality?
+  updatedAt DateTime               @updatedAt
+}
+
+model Horoscope {
+  createdAt         DateTime           @default(now())
+  dailyPrediction   String?
+  id                String             @id @default(auto()) @map("_id") @db.ObjectId
+  monthlyPrediction String?
+  sign              EnumHoroscopeSign?
+  updatedAt         DateTime           @updatedAt
+  weeklyPrediction  String?
+  yearlyPrediction  String?
+}
+
+model Compatibility {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  sign1       String?
+  sign2       String?
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  createdAt   DateTime  @default(now())
+  dateOfBirth DateTime?
+  email       String?   @unique
+  firstName   String?
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  lastName    String?
+  password    String
+  roles       Json
+  updatedAt   DateTime  @updatedAt
+  username    String    @unique
+}
+
+enum EnumZodiacSignElement {
+  Option1
+}
+
+enum EnumZodiacSignQuality {
+  Option1
+}
+
+enum EnumHoroscopeSign {
+  Option1
+}
